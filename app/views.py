@@ -1,12 +1,21 @@
 from django.shortcuts import render, redirect
 from app.forms import UsuarioForm
 from app.models import Usuario
+from django.core.paginator import Paginator
 
 
 # Create your views here.
 def home (request):
     data = {}
-    data['db'] = Usuario.objects.all()
+    search = request.GET.get('search')
+    if search:
+        data['db'] = Usuario.objects.filter(Nome__icontains=search)
+    else:
+        data['db'] = Usuario.objects.all()
+    #all = Usuario.objects.all()
+    #paginator = Paginator (all, 2)
+    #pages = request.GET.get('page')
+    #data['db'] = paginator.get_page(pages)
     return render(request, 'index.html', data)
 
 def form (request):
@@ -33,8 +42,13 @@ def edit(request, pk):
 
 def update(request, pk):
     data = {}
-    data ['db'] = Usuario.objects.get(pk=pk)
+    data['db'] = Usuario.objects.get(pk=pk)
     form = UsuarioForm(request.POST or None, instance=data['db'])
     if form.is_valid():
-        form.save
+        form.save()
+        return redirect('home')
+    
+def delete(request, pk):
+    db = Usuario.objects.get(pk=pk)
+    db.delete()
     return redirect('home')

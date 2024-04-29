@@ -12,6 +12,12 @@
     </div>
 
     <div class="col-8 m-auto pt-4 pb-4 text-center">
+      <form method="get">
+        <input type="text" id="search" name="search" class="form-control" placeholder="Buscar...">
+      </form>
+  </div>
+
+    <div class="col-8 m-auto pt-4 pb-4 text-center">
         <a href="/form" class="btn btn-success">Adicionar</a>
     </div>
 
@@ -31,17 +37,32 @@
           <tr>
             <th>{{bds.id}}</th>
             <td>{{bds.Nome}}</td>
-            <td>{{bds.Nndereco}}</td>
+            <td>{{bds.Endereco}}</td>
             <td>{{bds.Telefone}}</td>
             <td>
               <a href="/view/{{bds.id}}/" class="btn btn-dark">Visualizar</a>
               <a href="/edit/{{bds.id}}/" class="btn btn-primary">Editar</a>
-              <a href="" class="btn btn-danger">Deletar</a>
+              <a href="/delete/{{bds.id}}/" class="btn btn-danger btnDel">Deletar</a>
             </td>
           </tr>
         {% endfor %} 
         </tbody>
       </table>
     </div>
+
+   <!-- <div class="pagination">
+        {% if db.has_previous %}
+            <a href="?page={{db.previous_page_number}}"> < </a>
+        {% endif %}
+
+        {{db.number}}
+
+        {% if db.has_next %}
+            <a href="?page={{db.next_page_number}}"> > </a>
+        {% endif %}
+    </div>-->
+
+    {% load static %}
+    <script src="{% static 'javascript.js' %}"></script>
 </body>
 </html>
