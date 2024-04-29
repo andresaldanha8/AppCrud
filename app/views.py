@@ -32,4 +32,9 @@ def edit(request, pk):
     return render(request, 'form.html', data)
 
 def update(request, pk):
-    return render(request, 'index.html')
+    data = {}
+    data ['db'] = Usuario.objects.get(pk=pk)
+    form = UsuarioForm(request.POST or None, instance=data['db'])
+    if form.is_valid():
+        form.save
+    return redirect('home')
